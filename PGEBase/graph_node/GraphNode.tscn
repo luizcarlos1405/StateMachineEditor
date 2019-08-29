@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://PGEBase/graph_node/GraphNodePanelFocus.tres" type="StyleBox" id=1]
+[ext_resource path="res://PGEBase/graph_node/GraphNodePanelNormal.tres" type="StyleBox" id=2]
+[ext_resource path="res://PGEBase/graph_node/GraphNode.gd" type="Script" id=3]
+[ext_resource path="res://PGEBase/icons/icon_close.svg" type="Texture" id=4]
+[ext_resource path="res://PGEBase/graph_node_slot/GraphNodeSlot.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GodotAlienTheme.tres" type="Theme" id=6]
+
+[node name="GraphNode" type="Panel"]
+margin_right = 179.0
+margin_bottom = 58.0
+focus_mode = 1
+custom_styles/panelf = ExtResource( 1 )
+custom_styles/panel = ExtResource( 2 )
+custom_styles/panelnc = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="Parts" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = 50.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 4
+
+[node name="Header" type="HBoxContainer" parent="Parts"]
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Parts/Header"]
+margin_top = 1.0
+margin_right = 72.0
+margin_bottom = 15.0
+text = "GraphNode"
+align = 1
+
+[node name="CloseButton" type="TextureButton" parent="Parts/Header"]
+margin_left = 155.0
+margin_right = 171.0
+margin_bottom = 16.0
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture_normal = ExtResource( 4 )
+
+[node name="Menu" type="HBoxContainer" parent="Parts"]
+margin_top = 20.0
+margin_right = 171.0
+margin_bottom = 42.0
+
+[node name="GraphNodeSlot" parent="Parts/Menu" instance=ExtResource( 5 )]
+margin_top = 3.0
+margin_bottom = 18.0
+mode = 1
+
+[node name="AddItemButton" type="MenuButton" parent="Parts/Menu"]
+margin_left = 19.0
+margin_right = 171.0
+margin_bottom = 22.0
+mouse_filter = 1
+size_flags_horizontal = 3
+theme = ExtResource( 6 )
+text = "Add Item"
+
+[node name="Items" type="VBoxContainer" parent="Parts"]
+margin_top = 46.0
+margin_right = 171.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+
+[node name="ResizerRight" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -4.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 10
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="ResizerLeft" type="Control" parent="."]
+anchor_bottom = 1.0
+margin_right = 4.0
+grow_vertical = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 10
+size_flags_horizontal = 8
+size_flags_vertical = 8

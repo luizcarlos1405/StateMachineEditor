@@ -1,0 +1,44 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Line2D",
+"class": "GraphEdge",
+"language": "GDScript",
+"path": "res://PGEBase/graph_node_slot/GraphEdge.gd"
+}, {
+"base": "Resource",
+"class": "PGEGraph",
+"language": "GDScript",
+"path": "res://PGEBase/graph_editor/PGEGraph.gd"
+} ]
+_global_script_class_icons={
+"GraphEdge": "",
+"PGEGraph": ""
+}
+
+[application]
+
+config/name="GraphSystem"
+run/main_scene="res://PGEBase/graph_editor/GraphEditor.tscn"
+config/icon="res://icon.png"
+
+[debug]
+
+gdscript/warnings/unassigned_variable=false
+gdscript/warnings/unassigned_variable_op_assign=false
+gdscript/warnings/unused_variable=false
+gdscript/warnings/unused_class_variable=false
+gdscript/warnings/unused_argument=false
+gdscript/warnings/return_value_discarded=false
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
