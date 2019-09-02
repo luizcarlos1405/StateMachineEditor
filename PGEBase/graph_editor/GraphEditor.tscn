@@ -1,14 +1,64 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://GodotAlienTheme.tres" type="Theme" id=1]
+[ext_resource path="res://PGEBase/GodotAlienTheme.tres" type="Theme" id=1]
 [ext_resource path="res://PGEBase/graph_editor/GraphEditor.gd" type="Script" id=2]
-[ext_resource path="res://PGEBase/icons/icon_close.svg" type="Texture" id=3]
-[ext_resource path="res://PGEBase/graph_start/GraphStartPanelNormal.tres" type="StyleBox" id=4]
-[ext_resource path="res://PGEBase/graph_start/GraphStart.gd" type="Script" id=5]
-[ext_resource path="res://PGEBase/graph_node_slot/GraphNodeSlot.tscn" type="PackedScene" id=6]
-[ext_resource path="res://PGEBase/Messages.gd" type="Script" id=7]
+[ext_resource path="res://PGEBase/icons/zoom_less.svg" type="Texture" id=3]
+[ext_resource path="res://PGEBase/icons/zoom_reset.svg" type="Texture" id=4]
+[ext_resource path="res://PGEBase/icons/zoom_more.svg" type="Texture" id=5]
+[ext_resource path="res://PGEBase/graph_start/GraphStartPanelNormal.tres" type="StyleBox" id=6]
+[ext_resource path="res://PGEBase/graph_start/GraphStart.gd" type="Script" id=7]
+[ext_resource path="res://PGEBase/slot/Slot.tscn" type="PackedScene" id=8]
+[ext_resource path="res://PGEBase/graph_editor/Messages.gd" type="Script" id=9]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.113725, 0.133333, 0.152941, 1 )
+
+[sub_resource type="InputEventKey" id=2]
+pressed = true
+scancode = 16777224
+
+[sub_resource type="ShortCut" id=3]
+shortcut = SubResource( 2 )
+
+[sub_resource type="InputEventKey" id=4]
+control = true
+command = true
+pressed = true
+scancode = 65
+
+[sub_resource type="ShortCut" id=5]
+shortcut = SubResource( 4 )
+
+[sub_resource type="InputEventKey" id=6]
+control = true
+command = true
+pressed = true
+scancode = 83
+
+[sub_resource type="ShortCut" id=7]
+shortcut = SubResource( 6 )
+
+[sub_resource type="InputEventKey" id=8]
+control = true
+command = true
+pressed = true
+scancode = 76
+
+[sub_resource type="ShortCut" id=9]
+shortcut = SubResource( 8 )
+
+[sub_resource type="InputEventKey" id=10]
+control = true
+command = true
+pressed = true
+scancode = 69
+
+[sub_resource type="ShortCut" id=11]
+shortcut = SubResource( 10 )
+
+[sub_resource type="StyleBoxEmpty" id=12]
+
+[sub_resource type="StyleBoxFlat" id=13]
 content_margin_left = 20.0
 content_margin_right = 20.0
 bg_color = Color( 0.113725, 0.133333, 0.152941, 0.733333 )
@@ -17,7 +67,7 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=14]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
@@ -45,6 +95,7 @@ tracks/1/keys = {
 }
 
 [node name="GraphEditor" type="Control"]
+show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
@@ -60,81 +111,116 @@ window_title = "Save Graph"
 resizable = true
 filters = PoolStringArray( "*.res" )
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Header" type="Panel" parent="."]
 anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.113725, 0.133333, 0.152941, 1 )
+margin_bottom = 26.0
+mouse_filter = 2
+custom_styles/panel = SubResource( 1 )
 
-[node name="Parts" type="VBoxContainer" parent="."]
+[node name="Items" type="HBoxContainer" parent="Header"]
 anchor_right = 1.0
-anchor_bottom = 1.0
 margin_left = 2.0
 margin_top = 2.0
 margin_right = -2.0
-margin_bottom = -2.0
-custom_constants/separation = 2
+margin_bottom = 24.0
 
-[node name="Header" type="HBoxContainer" parent="Parts"]
-margin_right = 1020.0
-margin_bottom = 22.0
-
-[node name="SaveButton" type="Button" parent="Parts/Header"]
-margin_right = 41.0
-margin_bottom = 22.0
-text = "Save"
-
-[node name="LoadButton" type="Button" parent="Parts/Header"]
-margin_left = 45.0
+[node name="Title" type="Label" parent="Header/Items"]
+margin_top = 1.0
 margin_right = 87.0
-margin_bottom = 22.0
-text = "Load"
-
-[node name="ExportButton" type="Button" parent="Parts/Header"]
-margin_left = 91.0
-margin_right = 143.0
-margin_bottom = 22.0
-text = "Export"
-
-[node name="Title" type="Label" parent="Parts/Header"]
-margin_left = 147.0
-margin_right = 1020.0
-margin_bottom = 22.0
+margin_bottom = 23.0
 mouse_filter = 1
-size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "Graph Editor"
 
-[node name="CloseButton" type="Button" parent="Parts/Header"]
-visible = false
-margin_left = 992.0
-margin_right = 1020.0
+[node name="ZoomOut" type="Button" parent="Header/Items"]
+margin_left = 91.0
+margin_right = 119.0
 margin_bottom = 24.0
 focus_mode = 0
+shortcut = SubResource( 3 )
 icon = ExtResource( 3 )
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Parts"]
-margin_top = 24.0
-margin_right = 1020.0
-margin_bottom = 596.0
+[node name="ZoomReset" type="Button" parent="Header/Items"]
+margin_left = 123.0
+margin_right = 151.0
+margin_bottom = 24.0
+focus_mode = 0
+shortcut = SubResource( 3 )
+icon = ExtResource( 4 )
+
+[node name="ZoomIn" type="Button" parent="Header/Items"]
+margin_left = 155.0
+margin_right = 183.0
+margin_bottom = 24.0
+focus_mode = 0
+shortcut = SubResource( 3 )
+icon = ExtResource( 5 )
+
+[node name="AddNodeButton" type="Button" parent="Header/Items"]
+margin_left = 187.0
+margin_right = 262.0
+margin_bottom = 24.0
+focus_mode = 0
+shortcut = SubResource( 5 )
+text = "Add Node"
+
+[node name="SaveButton" type="Button" parent="Header/Items"]
+margin_left = 266.0
+margin_right = 307.0
+margin_bottom = 24.0
+focus_mode = 0
+shortcut = SubResource( 7 )
+text = "Save"
+
+[node name="LoadButton" type="Button" parent="Header/Items"]
+margin_left = 311.0
+margin_right = 353.0
+margin_bottom = 24.0
+focus_mode = 0
+shortcut = SubResource( 9 )
+text = "Load"
+
+[node name="ExportButton" type="Button" parent="Header/Items"]
+visible = false
+margin_left = 261.0
+margin_right = 313.0
+margin_bottom = 22.0
+focus_mode = 0
+shortcut = SubResource( 11 )
+text = "Export"
+
+[node name="DeleteButton" type="Button" parent="Header/Items"]
+margin_left = 357.0
+margin_right = 412.0
+margin_bottom = 24.0
+focus_mode = 0
+shortcut = SubResource( 3 )
+text = "Delete"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 27.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="Parts/ScrollContainer"]
-margin_right = 1020.0
-margin_bottom = 572.0
+[node name="Panel" type="Panel" parent="ScrollContainer"]
+margin_right = 1024.0
+margin_bottom = 573.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/panel = SubResource( 12 )
 
-[node name="GraphStart" type="Panel" parent="Parts/ScrollContainer/Panel"]
+[node name="GraphStart" type="Panel" parent="ScrollContainer/Panel"]
 margin_left = 18.0
-margin_top = 16.9072
+margin_top = 18.0
 margin_right = 78.0
-margin_bottom = 43.9072
+margin_bottom = 45.0
 focus_mode = 1
-custom_styles/panel = ExtResource( 4 )
-script = ExtResource( 5 )
+custom_styles/panel = ExtResource( 6 )
+script = ExtResource( 7 )
 
-[node name="Label" type="Label" parent="Parts/ScrollContainer/Panel/GraphStart"]
+[node name="Label" type="Label" parent="ScrollContainer/Panel/GraphStart"]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_top = -11.0
@@ -143,7 +229,7 @@ margin_bottom = 11.0
 theme = ExtResource( 1 )
 text = "Start"
 
-[node name="GraphNodeSlot" parent="Parts/ScrollContainer/Panel/GraphStart" instance=ExtResource( 6 )]
+[node name="Slot" parent="ScrollContainer/Panel/GraphStart" instance=ExtResource( 8 )]
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -153,6 +239,7 @@ margin_top = -7.5
 margin_right = 0.0
 margin_bottom = 7.5
 max_connections = 1
+tangent_x_direction = 1
 
 [node name="Messages" type="Label" parent="."]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -165,14 +252,14 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_scale = Vector2( 0.926261, 0.768455 )
 rect_pivot_offset = Vector2( 58, 11 )
-custom_styles/normal = SubResource( 2 )
+custom_styles/normal = SubResource( 13 )
 text = "Message"
 align = 1
 valign = 1
-script = ExtResource( 7 )
+script = ExtResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Messages"]
-anims/show_message = SubResource( 3 )
+anims/show_message = SubResource( 14 )
 
 [node name="Timer" type="Timer" parent="Messages"]
 wait_time = 3.0

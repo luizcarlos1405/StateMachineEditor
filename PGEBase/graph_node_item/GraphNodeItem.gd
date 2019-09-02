@@ -1,10 +1,15 @@
 tool
-extends VBoxContainer
+extends PanelContainer
 
 enum SlotSide {LEFT, RIGHT}
 
+export var type := "Item"
+export var max_per_node := 0
 export var slot_active := true setget set_slot_active
+export var resizable := true
 export(SlotSide) var slot_side := SlotSide.RIGHT setget set_slot_side
+export(StyleBox) var style_box_normal = preload("GraphNodeItemPanelNormal.tres")
+export(StyleBox) var style_box_focus = preload("GraphNodeItemPanelFocus.tres")
 
 var resizing = false
 var scene_path: String
@@ -20,32 +25,34 @@ func _ready() -> void:
 		slot.set_visible(slot_active)
 	
 	if not Engine.editor_hint:
+		$Resizer.set_visible(resizable)
 		slot.graph_node_item = self
 		
-		$Parts/DeleteButton.connect("pressed", self, "_on_DeleteButton_pressed")
+		connect("gui_input", self, "_on_gui_input")
+		connect("focus_entered", self, "_on_focus_entered")
+		connect("focus_exited", self, "_on_focus_exited")
 		
+		$PopupMenu.connect("index_pressed", self, "_on_PopupMenu_index_pressed")
+		$Parts/DeleteButton.connect("pressed", self, "_on_DeleteButton_pressed")
 		$Resizer.connect("gui_input", self, "_on_Resizer_gui_input")
 
 
-func add_connection(to) -> void:
-	var graph_edge = GraphEdge.new()
-	$Parts/GraphNodeSlot.add_child(graph_edge)
-	
-	graph_edge.set_from($Parts/GraphNodeSlot)
-	graph_edge.set_to(to)
+func add_connection(to_slot) -> void:
+	slot.connect_to(to_slot)
 
 
 func serialize() -> Dictionary:
 	var info := {
+		type = type,
 		editor_data = get_editor_data(),
-		item_data = get_data(),
+		item_data = get_item_data(),
 		connections = []
 	}
 	var path = get_path()
 	
 	if slot_active:
-		for connection in slot.get_connections():
-			info.connections.append(connection.to.graph_node.name)
+		for connected_slot in slot.get_connections():
+			info.connections.append(connected_slot.graph_node.name)
 	
 	return info
 
@@ -75,18 +82,46 @@ func set_editor_data(editor_data: Dictionary) -> void:
 	scene_path = editor_data.scene_path
 
 
-func get_data():pass
-func set_data(data): pass
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_RIGHT:
+			if event.pressed:
+				if not get_tree().is_input_handled():
+					$PopupMenu.popup(Rect2(get_global_mouse_position(), Vector2(1, 1)))
+					pass
+
+
+func _on_focus_entered() -> void:
+	add_stylebox_override("panel", style_box_focus)
+
+
+func _on_focus_exited() -> void:
+	add_stylebox_override("panel", style_box_normal)
+
+
+func _on_PopupMenu_index_pressed(index: int) -> void:
+	match index:
+		0:
+			
+			if slot_side == SlotSide.LEFT:
+				set_slot_side(SlotSide.RIGHT)
+				
+			elif slot_side == SlotSide.RIGHT:
+				set_slot_side(SlotSide.LEFT)
+			pass
+		_:
+			print("[WARNING]: nothing implemented for index %s." % index)
 
 
 func _on_Resizer_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if resizing:
-			if event.relative.y > 0:
-				if event.position.y < 0:
-					return
 			
 			rect_min_size.y += event.position.y - _reference_position.y
+			rect_size.y = rect_min_size.y
+			rect_min_size.y = rect_size.y
+#			if rect_size.y > rect_min_size.y:
+#				rect_min_size.y = rect_size.y
 		
 	elif event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
@@ -110,8 +145,14 @@ func set_slot_side(value: int) -> void:
 	
 	if slot_side == SlotSide.LEFT:
 		$Parts.move_child($Parts/DeleteButton, 2)
-		$Parts.move_child(slot, 0)
+		$Parts.move_child($Parts/GraphNodeSlot, 0)
+		$Parts/GraphNodeSlot.tangent_x_direction = -1
 		
 	elif slot_side == SlotSide.RIGHT:
 		$Parts.move_child($Parts/DeleteButton, 0)
-		$Parts.move_child(slot, 2)
+		$Parts.move_child($Parts/GraphNodeSlot, 2)
+		$Parts/GraphNodeSlot.tangent_x_direction = 1
+
+
+func get_item_data(): pass
+func set_item_data(data): pass

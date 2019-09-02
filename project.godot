@@ -8,27 +8,21 @@
 
 config_version=4
 
-_global_script_classes=[ {
-"base": "Line2D",
-"class": "GraphEdge",
-"language": "GDScript",
-"path": "res://PGEBase/graph_node_slot/GraphEdge.gd"
-}, {
-"base": "Resource",
-"class": "PGEGraph",
-"language": "GDScript",
-"path": "res://PGEBase/graph_editor/PGEGraph.gd"
-} ]
+_global_script_classes=[  ]
 _global_script_class_icons={
-"GraphEdge": "",
-"PGEGraph": ""
+
 }
 
 [application]
 
 config/name="GraphSystem"
-run/main_scene="res://PGEBase/graph_editor/GraphEditor.tscn"
+run/main_scene="res://StateMachine/StateMachineEditor.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+PGE="*res://PGEBase/PGE.gd"
+Test="*res://singletons/Test.gd"
 
 [debug]
 
@@ -39,6 +33,11 @@ gdscript/warnings/unused_class_variable=false
 gdscript/warnings/unused_argument=false
 gdscript/warnings/return_value_discarded=false
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [rendering]
 
+environment/default_clear_color=Color( 0.137255, 0.160784, 0.184314, 1 )
 environment/default_environment="res://default_env.tres"

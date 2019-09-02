@@ -1,14 +1,17 @@
 extends Resource
 
-class_name PGEGraph
-
 export var connections: Dictionary
 
 """
 	connections is an adjacency list in the following format:
 	
 	{
-		start : node_name,
+		'GraphStart' : {
+			'editor_data' :{
+				rect_position
+			},
+			'start_node_name' : sarting node name,
+		},
 		node_name : {
 			'editor_data' : {
 				data the editor needs to load and edit the node
