@@ -10,6 +10,7 @@ export var connections: Dictionary
 			'editor_data' :{
 				rect_position
 			},
+			'name': the node's name
 			'start_node_name' : sarting node name,
 		},
 		node_name : {

@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Reference",
+"class": "StateScript",
+"language": "GDScript",
+"path": "res://StateMachine/state_scripts/StateScript.gd"
+} ]
 _global_script_class_icons={
-
+"StateScript": ""
 }
 
 [application]
@@ -22,7 +27,7 @@ config/icon="res://icon.png"
 [autoload]
 
 PGE="*res://PGEBase/PGE.gd"
-Test="*res://singletons/Test.gd"
+TouchGestures="*res://singletons/TouchGestures.gd"
 
 [debug]
 

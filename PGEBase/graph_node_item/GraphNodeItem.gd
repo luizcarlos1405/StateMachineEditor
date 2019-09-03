@@ -136,7 +136,8 @@ func _on_DeleteButton_pressed() -> void:
 func set_slot_active(value: bool) -> void:
 	slot_active = value
 	
-	if Engine.editor_hint and slot:
+	var slot = get_node_or_null("Parts/GraphNodeSlot")
+	if slot:
 		slot.set_visible(value)
 
 

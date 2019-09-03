@@ -42,6 +42,15 @@ func next_node(item_id := 0, connection_id := 0) -> Dictionary:
 	return next_node
 
 
+func reset_graph() -> Dictionary:
+	var start_node_name = graph.connections.GraphStart.start_node_name
+	var start_node: Dictionary = graph.connections[start_node_name]
+	
+	set_current_node(start_node)
+	
+	return start_node
+
+
 func print_node_items(node: Dictionary) -> void:
 	if not node.has("items"):
 		print("Not a node.")

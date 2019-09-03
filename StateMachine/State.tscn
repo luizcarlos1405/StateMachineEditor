@@ -7,7 +7,7 @@
 margin_right = 140.0
 rect_min_size = Vector2( 140, 0 )
 script = ExtResource( 2 )
-item_scene_paths = PoolStringArray( "res://StateMachine/EventTouch.tscn", "res://StateMachine/EventDrag.tscn", "res://StateMachine/EventRelease.tscn", "res://StateMachine/EventTimeout.tscn", "res://StateMachine/EventDragFast.tscn" )
+item_scene_paths = PoolStringArray( "res://StateMachine/StateScript.tscn", "res://StateMachine/EventTouch.tscn", "res://StateMachine/EventDrag.tscn", "res://StateMachine/EventRelease.tscn", "res://StateMachine/EventTimeout.tscn", "res://StateMachine/EventDragFast.tscn" )
 
 [node name="PopupMenu" parent="." index="0"]
 items = [ "Swap slot side", null, 0, false, false, -1, 0, null, "", false ]

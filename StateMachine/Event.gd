@@ -1,5 +1,6 @@
 extends "res://PGEBase/graph_node_item/GraphNodeItem.gd"
 
+
 func _ready():
 	$Parts/Content/Label.text = type
 	pass

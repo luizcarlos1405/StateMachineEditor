@@ -74,7 +74,8 @@ func _ready() -> void:
 func serialize() -> Dictionary:
 	var info = {
 		editor_data = get_editor_data(),
-		items = []
+		items = [],
+		name = name
 	}
 	
 	for graph_node_item in $Parts/Items.get_children():
@@ -91,7 +92,7 @@ func get_editor_data() -> Dictionary:
 		rect_min_size = rect_min_size,
 		rect_size = rect_size,
 		slot_side = slot_side,
-		item_scene_paths = item_scene_paths
+#		item_scene_paths = item_scene_paths
 	}
 	
 	return editor_data
@@ -103,7 +104,7 @@ func set_editor_data(editor_data: Dictionary) -> void:
 #	set_custom_minimum_size(editor_data.rect_min_size)
 	set_size(editor_data.rect_size)
 	set_slot_side(editor_data.slot_side)
-	item_scene_paths = editor_data.item_scene_paths
+#	item_scene_paths = editor_data.item_scene_paths
 	
 	$Parts/Header/Name.text = name
 
