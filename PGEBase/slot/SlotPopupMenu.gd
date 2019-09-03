@@ -40,7 +40,7 @@ func _on_index_pressed(index: int) -> void:
 
 func make_item_text(graph_edge) -> String:
 	if graph_edge.from_slot.graph_node.name == "GraphStart":
-		return "%s.%s -> %s" % [
+		return "%s -> %s" % [
 				graph_edge.from_slot.graph_node.name,
 				graph_edge.to_slot.graph_node.name
 			]
